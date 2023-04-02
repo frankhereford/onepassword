@@ -18,6 +18,10 @@ jobs:
           #SECRET: op://Discovery\ Day/Arbitrary\ key\ value\ pairs/lunch
           SECRET: op://quvhrzaatbj2wotsjrumx3f62a/hfsyfsg7gehqfutju5eh6ullgy/lunch
 
+      - name: hash secret
+        run: |
+          echo CHECKSUM="$(echo ${{ steps.op-load-secret.outputs.SECRET }} | shasum | awk '{ print $1 }')" >> "$GITHUB_ENV"
+
       - name: Print masked secret
-        run: 'echo "Secret: ${{ steps.op-load-secret.outputs.SECRET }}"'
+        run: 'echo "Secret: ${{ env.CHECKSUM }}"'
         # Prints: Secret: ***
