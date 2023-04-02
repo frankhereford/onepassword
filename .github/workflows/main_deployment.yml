@@ -4,7 +4,7 @@ name: Push on main
 
 on: push
 jobs:
-  hello-world:
+  work-with-secrets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,7 +13,7 @@ jobs:
         id: op-load-secret
         uses: 1password/load-secrets-action@v1
         env:
-          OP_CONNECT_HOST: <Your Connect instance URL>
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST}}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
           SECRET: op://Discovery\ Day/Arbitrary\ key\ value\ pairs/lunch
 
