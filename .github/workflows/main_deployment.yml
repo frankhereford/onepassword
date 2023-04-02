@@ -15,8 +15,8 @@ jobs:
         env:
           OP_CONNECT_HOST: <Your Connect instance URL>
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
-          SECRET: op://quvhrzaatbj2wotsjrumx3f62a/hfsyfsg7gehqfutju5eh6ullgy/lunch
+          SECRET: op://Discovery\ Day/Arbitrary\ key\ value\ pairs/lunch
 
       - name: Print masked secret
-        run: echo "Secret: ${{ steps.op-load-secret.outputs.SECRET }}"
+        run: 'echo "Secret: ${{ steps.op-load-secret.outputs.SECRET }}"'
         # Prints: Secret: ***
