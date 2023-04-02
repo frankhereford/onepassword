@@ -31,7 +31,7 @@ jobs:
         run: 'echo "secret length: ${{ steps.op-load-secret.outputs.SECRET }}" | wc'
 
       - name: Add shaw to input
-        run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}" > output.json'
+        run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
 
       - name: Cat output
         run: cat output.json
