@@ -1,0 +1,22 @@
+---
+
+name: Push on main
+
+on: push
+jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Load secret
+        id: op-load-secret
+        uses: 1password/load-secrets-action@v1
+        env:
+          OP_CONNECT_HOST: <Your Connect instance URL>
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
+          SECRET: op://quvhrzaatbj2wotsjrumx3f62a/hfsyfsg7gehqfutju5eh6ullgy/lunch
+
+      - name: Print masked secret
+        run: echo "Secret: ${{ steps.op-load-secret.outputs.SECRET }}"
+        # Prints: Secret: ***
