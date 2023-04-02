@@ -22,7 +22,7 @@ jobs:
 
       - name: hash secret
         run: |
-          echo CHECKSUM="$(echo ${{ env.INPUT_TO_SHA }}-${{ env.INPUT_TO_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
+          echo CHECKSUM="$(echo ${{ env.GH_PAT }}-${{ env.GH_PAT }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
       - name: Add shaw to input
         run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
