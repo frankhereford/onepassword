@@ -18,6 +18,7 @@ jobs:
           #SECRET: op://Discovery\ Day/Arbitrary\ key\ value\ pairs/lunch
           SECRET: op://quvhrzaatbj2wotsjrumx3f62a/hfsyfsg7gehqfutju5eh6ullgy/lunch
 
+
       - name: hash secret
         run: |
           #echo CHECKSUM="$(echo ${{ steps.op-load-secret.outputs.SECRET }} | shasum | cut -b 1-42 )" >> "$GITHUB_ENV"
@@ -29,8 +30,11 @@ jobs:
       - name: Print secret length 
         run: 'echo "secret length: ${{ steps.op-load-secret.outputs.SECRET }}" | wc'
 
-      - name: Print secret
-        run: 'echo "secret sha: ${{ steps.op-load-secret.outputs.SECRET }}"'
+      - name: Add shaw to input
+        run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}" > output.json'
+
+      - name: Cat output
+        run: cat output.json
 
       - name: Print masked secret
         run: 'echo "shasum secret: ${{ env.CHECKSUM }}"'
