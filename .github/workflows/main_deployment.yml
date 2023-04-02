@@ -39,3 +39,13 @@ jobs:
       - name: Print masked secret
         run: 'echo "shasum secret: ${{ env.CHECKSUM }}"'
         # Prints: Secret: ***
+
+      - name: Commit updated version in package.json
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'output.json'
+          author_name: Frank Hereford
+          author_email: frank@frankhereford.com
+          commit: --signoff
+          message: '🤖 Set SHA hash'
+          push: false
