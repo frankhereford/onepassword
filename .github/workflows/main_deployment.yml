@@ -20,7 +20,7 @@ jobs:
 
       - name: hash secret
         run: |
-          echo CHECKSUM="$(echo ${{ steps.op-load-secret.outputs.SECRET }} | shasum | awk '{ print $1 }')" >> "$GITHUB_ENV"
+          echo CHECKSUM="$(echo ${{ steps.op-load-secret.outputs.SECRET }} | shasum | cut -b 1-42 )" >> "$GITHUB_ENV"
 
       - name: Print masked secret
         run: 'echo "Secret: ${{ env.CHECKSUM }}"'
