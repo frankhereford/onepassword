@@ -16,19 +16,19 @@ jobs:
           OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
           #SECRET: op://Discovery\ Day/Arbitrary\ key\ value\ pairs/lunch
-          SECRET: op://quvhrzaatbj2wotsjrumx3f62a/hfsyfsg7gehqfutju5eh6ullgy/lunch
+          INPUT_TO_SHA: op://quvhrzaatbj2wotsjrumx3f62a/552nktod6ec3lpzmfw2h5f25by/password
+          GH_PAT: op://quvhrzaatbj2wotsjrumx3f62a/a7cwbxobckajanb3xasn4eibla/password
 
 
       - name: hash secret
         run: |
-          #echo CHECKSUM="$(echo ${{ steps.op-load-secret.outputs.SECRET }} | shasum | cut -b 1-42 )" >> "$GITHUB_ENV"
-          echo CHECKSUM="$(echo ${{ env.SECRET }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
+          echo CHECKSUM="$(echo ${{ env.INPUT_TO_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
       - name: Print output
         run: 'echo "output: ${{ steps.op-load-secret.outputs }}" '
 
-      - name: Print secret length 
-        run: 'echo "secret length: ${{ steps.op-load-secret.outputs.SECRET }}" | wc'
+      # - name: Print secret length 
+        # run: 'echo "secret length: ${{ steps.op-load-secret.outputs.SECRET }}" | wc'
 
       - name: Add shaw to input
         run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
@@ -40,7 +40,7 @@ jobs:
         run: 'echo "shasum secret: ${{ env.CHECKSUM }}"'
         # Prints: Secret: ***
 
-      - name: Commit updated version in package.json
+      - name: Commit output file
         uses: EndBug/add-and-commit@v9
         with:
           add: 'output.json'
@@ -49,3 +49,13 @@ jobs:
           commit: --signoff
           message: '🤖 Set SHA hash'
           push: false
+
+      - name: Git Pull
+        run: >
+          git pull
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          branch: ${{ github.ref }}
+          github_token: ${{ steps.op-load-secret.outputs.GH_PAT }}
