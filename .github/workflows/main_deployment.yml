@@ -23,6 +23,9 @@ jobs:
           #echo CHECKSUM="$(echo ${{ steps.op-load-secret.outputs.SECRET }} | shasum | cut -b 1-42 )" >> "$GITHUB_ENV"
           echo CHECKSUM="$(echo ${{ env.SECRET }} | shasum | cut -b 1-42 )" >> "$GITHUB_ENV"
 
+      - name: Print host
+        run: 'echo "secret: ${{ secrets.OP_CONNECT_HOST }}"'
+
       - name: Print secret
         run: 'echo "secret: ${{ steps.op-load-secret.outputs.SECRET }}"'
 
