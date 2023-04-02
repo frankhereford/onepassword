@@ -22,13 +22,7 @@ jobs:
 
       - name: hash secret
         run: |
-          echo CHECKSUM="$(echo ${{ env.INPUT_TO_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
-
-      - name: Print output
-        run: 'echo "output: ${{ steps.op-load-secret.outputs }}" '
-
-      # - name: Print secret length 
-        # run: 'echo "secret length: ${{ steps.op-load-secret.outputs.SECRET }}" | wc'
+          echo CHECKSUM="$(echo ${{ env.INPUT_TO_SHA }}-$(echo ${{ env.INPUT_TO_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
       - name: Add shaw to input
         run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
@@ -58,4 +52,4 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           branch: ${{ github.ref }}
-          github_token: ${{ steps.op-load-secret.outputs.GH_PAT }}
+          github_token: ${{ env.GH_PAT }}
