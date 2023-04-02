@@ -21,8 +21,8 @@ jobs:
       - name: hash secret
         run: |
           #echo CHECKSUM="$(echo ${{ steps.op-load-secret.outputs.SECRET }} | shasum | cut -b 1-42 )" >> "$GITHUB_ENV"
-          echo CHECKSUM="$(echo a_string | shasum | cut -b 1-42 )" >> "$GITHUB_ENV"
+          echo CHECKSUM="$(echo ${{ steps.op-load-secret.outputs.SECRET }} | shasum | cut -b 1-42 )" >> "$GITHUB_ENV"
 
       - name: Print masked secret
-        run: 'echo "Secret: ${{ env.CHECKSUM }}"'
+        run: 'echo "shasum'd secret: ${{ env.CHECKSUM }}"'
         # Prints: Secret: ***
