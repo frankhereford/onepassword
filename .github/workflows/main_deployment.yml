@@ -16,10 +16,8 @@ jobs:
         env:
           OP_CONNECT_HOST: https://nothingbut.flowers
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
-          #OP_SECRET_FOR_SHA: op://quvhrzaatbj2wotsjrumx3f62a/552nktod6ec3lpzmfw2h5f25by/password
           OP_SECRET_FOR_SHA: "op://Discovery Day/Secret For SHA/password"
-          GITHUB_PAT: op://quvhrzaatbj2wotsjrumx3f62a/a7cwbxobckajanb3xasn4eibla/password
-
+          GITHUB_PAT: "op://Discovery Day/GitHub PAT/password"
 
       - name: Get input
         run : |
