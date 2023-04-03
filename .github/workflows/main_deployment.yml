@@ -30,12 +30,15 @@ jobs:
           echo CHECKSUM="$(echo ${{ env.INPUT }}-${{ env.OP_SECRET_FOR_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
       - name: Add shaw to input
-        run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
+        run: cat sha_computer.json | jq '.shaWithSecret="${{ env.CHECKSUM }}"' > output.json
+
+      - name: Move file
+        run: mv output.json sha_computer.json
 
       - name: Commit output file
         uses: EndBug/add-and-commit@v9
         with:
-          add: 'output.json'
+          add: 'sha_computer.json'
           author_name: Frank Hereford
           author_email: frank@frankhereford.com
           commit: --signoff
