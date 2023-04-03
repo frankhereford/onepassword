@@ -17,17 +17,17 @@ jobs:
           OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
           #SECRET: op://Discovery\ Day/Arbitrary\ key\ value\ pairs/lunch
-          INPUT_TO_SHA: op://quvhrzaatbj2wotsjrumx3f62a/552nktod6ec3lpzmfw2h5f25by/password
+          OP_SECRET_FOR_SHA: op://quvhrzaatbj2wotsjrumx3f62a/552nktod6ec3lpzmfw2h5f25by/password
           GITHUB_PAT: op://quvhrzaatbj2wotsjrumx3f62a/a7cwbxobckajanb3xasn4eibla/password
 
 
       - name: Get input
         run : |
-          echo INPUT="$(cat sha_computer  | jq -r '.input')" >> "$GITHUB_ENV"
+          echo INPUT="$(cat sha_computer.json  | jq -r '.input')" >> "$GITHUB_ENV"
 
       - name: hash secret
         run: |
-          echo CHECKSUM="$(echo ${{ env.INPUT }}-${{ env.INPUT_TO_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
+          echo CHECKSUM="$(echo ${{ env.INPUT }}-${{ env.OP_SECRET_FOR_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
       - name: Add shaw to input
         run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
