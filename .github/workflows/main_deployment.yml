@@ -14,7 +14,7 @@ jobs:
         id: op-load-secret
         uses: 1password/load-secrets-action@v1
         env:
-          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_HOST: https://nothingbut.flowers
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
           #SECRET: op://Discovery\ Day/Arbitrary\ key\ value\ pairs/lunch
           OP_SECRET_FOR_SHA: op://quvhrzaatbj2wotsjrumx3f62a/552nktod6ec3lpzmfw2h5f25by/password
