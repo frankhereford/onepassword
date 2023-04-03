@@ -21,17 +21,21 @@ jobs:
           GITHUB_PAT: op://quvhrzaatbj2wotsjrumx3f62a/a7cwbxobckajanb3xasn4eibla/password
 
 
+      - name: Get input
+        run : |
+          echo INPUT="$(cat sha_computer  | jq -r '.input')" >> "$GITHUB_ENV"
+
       - name: hash secret
         run: |
-          echo CHECKSUM="$(echo ${{ env.INPUT_TO_SHA }}-${{ env.INPUT_TO_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
+          echo CHECKSUM="$(echo ${{ env.INPUT }}-${{ env.INPUT_TO_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
       - name: Add shaw to input
-        run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
+        run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > sha_computer.json
 
       - name: Commit output file
         uses: EndBug/add-and-commit@v9
         with:
-          add: 'output.json'
+          add: 'sha_computer.json'
           author_name: Frank Hereford
           author_email: frank@frankhereford.com
           commit: --signoff
