@@ -7,9 +7,6 @@ jobs:
   work-with-secrets:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: Load secret
         id: op-load-secret
         uses: 1password/load-secrets-action@v1
@@ -19,21 +16,24 @@ jobs:
           OP_SECRET_FOR_SHA: "op://Discovery Day/Secret For SHA/password"
           GITHUB_PAT: "op://Discovery Day/GitHub PAT/password"
 
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Get input
         run : |
           echo INPUT="$(cat sha_computer.json  | jq -r '.input')" >> "$GITHUB_ENV"
 
-      - name: hash secret
+      - name: Compute combined values SHA hash
         run: |
           echo CHECKSUM="$(echo ${{ env.INPUT }}-${{ env.OP_SECRET_FOR_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
-      - name: Add shaw to input
+      - name: Record computed SHA in JSON file
         run: cat sha_computer.json | jq '.shaWithSecret="${{ env.CHECKSUM }}"' > output.json
 
-      - name: Move file
+      - name: Replace file
         run: mv output.json sha_computer.json
 
-      - name: Commit output file
+      - name: Commit JSON file
         uses: EndBug/add-and-commit@v9
         with:
           add: 'sha_computer.json'
