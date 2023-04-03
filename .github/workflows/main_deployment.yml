@@ -18,12 +18,12 @@ jobs:
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
           #SECRET: op://Discovery\ Day/Arbitrary\ key\ value\ pairs/lunch
           INPUT_TO_SHA: op://quvhrzaatbj2wotsjrumx3f62a/552nktod6ec3lpzmfw2h5f25by/password
-          GH_PAT: op://quvhrzaatbj2wotsjrumx3f62a/a7cwbxobckajanb3xasn4eibla/password
+          OTHERNAME: op://quvhrzaatbj2wotsjrumx3f62a/a7cwbxobckajanb3xasn4eibla/password
 
 
       - name: hash secret
         run: |
-          echo CHECKSUM="$(echo ${{ env.GH_PAT }}-${{ env.GH_PAT }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
+          echo CHECKSUM="$(echo ${{ env.OTHERNAME }}-${{ env.OTHERNAME }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
       - name: Add shaw to input
         run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
@@ -53,4 +53,4 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           branch: ${{ github.ref }}
-          github_token: ${{ env.GH_PAT }}
+          github_token: ${{ env.OTHERNAME }}
