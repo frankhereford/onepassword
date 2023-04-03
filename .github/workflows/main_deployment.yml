@@ -23,17 +23,10 @@ jobs:
 
       - name: hash secret
         run: |
-          echo CHECKSUM="$(echo ${{ env.GITHUB_PAT }}-${{ env.GITHUB_PAT }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
+          echo CHECKSUM="$(echo ${{ env.INPUT_TO_SHA }}-${{ env.INPUT_TO_SHA }} | shasum | awk '{print $1;}')" >> "$GITHUB_ENV"
 
       - name: Add shaw to input
         run: cat sha_computer.json | jq '.sha="${{ env.CHECKSUM }}"' > output.json
-
-      - name: Cat output
-        run: cat output.json
-
-      - name: Print masked secret
-        run: 'echo "shasum secret: ${{ env.CHECKSUM }}"'
-        # Prints: Secret: ***
 
       - name: Commit output file
         uses: EndBug/add-and-commit@v9
