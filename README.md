@@ -46,7 +46,7 @@ This comes with a number of benefits including:
 
 ## Repository contents
 1) `1pw_cloudformation.yaml`: Infra as code, taken from the 1PW docs
-1) `env-template`: Copy this file to `.env` and provide you Connect Access Token, generated via the 1Password Website
+1) `env-template`: Copy this file to `.env` and provide a 1Password Connect Access Token, generated via the 1Password Website
 1) `requirements.txt`: The required python libraries to install in your venv
 1) `compute_answer.py`: A python script which uses the onepassword python library to request a particular secret. It also prompts the user for a string. The secret and the string are concatenated together and a SHA1 hash is taken of the result. This hash is then printed. This value can be used to check the GitHub action's result.
 1) `sha_computer.json`: A JSON file, which you can change the value of the `input` key to whatever you want. A GitHub action will update the `shaWithSecret` value in this file using the same method as `compute_answer.py`.
