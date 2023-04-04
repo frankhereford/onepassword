@@ -29,7 +29,7 @@ This comes with a number of benefits including:
   * There is no need to share it, and we shouldn't. That said, it wouldn't be bad if we did. It just is useful to no one except ourselves.
     * It contains essentially an indication of which account the connect server is relaying information for.
     * It does **_not_** contain permission or the ability to read the contents of any vaults.
-* The API service can be deployed locally on machines which need to access secrets so that that no cross-internet traffic to your 1Password Connect API.
+* The API service can be deployed locally on machines which need to access secrets so that that no cross-internet traffic occurs between your app and the 1Password Connect API.
   * This is ultra-paranoia mode. It's entirely fine to allow API requests to traverse the internet with proper SSL/TLS support configured.
     * Realistically, one must understand that all of our secrets traverse the internet daily as we use the 1Password app.
   * This demonstration uses an endpoint available on the wider internet at https://nothingbut.flowers with an AWS ACM supplied certificate, which will auto-renew.
@@ -40,7 +40,8 @@ This comes with a number of benefits including:
   * Essentially, every application which needs to access our secrets API will need a token to do so.
   * These tokens are generated via the 1Password website, and they can be limited by vault and can be given an expiry date, optionally.
   * There can be as many tokens generated as needed.
-    * A token can be thought of as the same as a user-like-entity in 1Password. Just like if Jane Doe, a member of the DTS team, is given an account with access to certain vaults, then a One Password Connect API server is given a token with access to certain vaults in the same way.
+    * A token can be thought of as the same as a user-like-entity in 1Password. Just like if Jane Doe, a member of the DTS team, is given an account with access to certain vaults, then a One Password Connect API server will use the provided token to access vaults to which that token has permission to read and write.
+  * These tokens are **very secret** secrets. Depending on what vault they can read, they very well can be considered keys to the kingdom.
 * Create a python `venv`, and install the libraries listed in `requirements.txt` so that you can run `compute_answer.py`.
 
 ## Repository contents
