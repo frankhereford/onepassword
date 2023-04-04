@@ -3,11 +3,12 @@
 ## Discovery Day Sprint 2023
 
 ### Intent
-This repository contains proof on concept work intended to show that 1Password can be used as a centralized secret store and integrated into other systems, such that it can be only and authoritative store of secrets.
+This repository contains proof-of-concept work intended to show that 1Password can be used as a centralized secret store and integrated into other systems, such that it can be only and authoritative store of secrets.
 
 This comes with a number of benefits including:
 * Need to rotate a secret? 
   * Set it once in the 1Password App and you're done!
+  * This works no matter how many apps or places that secret is used.
 * Need to have a reminder when to rotate? 
   * 1Password would love to remind you.
 * Need to avoid having to keep track of the shapes of JSON blobs with secrets in them? 
