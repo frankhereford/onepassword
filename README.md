@@ -3,19 +3,19 @@
 ## Discovery Day Sprint 2023
 
 ### Intent
-This repository contains some proof on concept work intended to show that 1Password can be used as a centralized secret store and integrated into other systems, such that it can be only and authoritative store of secrets.
+This repository contains proof on concept work intended to show that 1Password can be used as a centralized secret store and integrated into other systems, such that it can be only and authoritative store of secrets.
 
 This comes with a number of benefits including:
 * Need to rotate a secret? 
-  * Set it once and you're done!
+  * Set it once in the 1Password App and you're done!
 * Need to have a reminder when to rotate? 
   * 1Password would love to remind you.
 * Need to avoid having to keep track of the shapes of JSON blobs with secrets in them? 
-  * Just make a 1password entry of whatever complexity; it is the shape.
+  * Just make a 1Password entry of whatever complexity. The 1Password entry is the shape.
 
 ## Prerequisites
 
-* You must have deployed a `One Password Connect` service.
+* You must have deploy a `One Password Connect` service.
   * For this demo, the API is found at https://nothingbut.flowers.
     * A `404` is the correct response if you hit the URL without the correct headers or a meaningful request.
   * This service comes in the form of a pair of docker images.
@@ -25,11 +25,15 @@ This comes with a number of benefits including:
   * There is no need to share it, and we shouldn't, but, it wouldn't be bad if we did.
     * It contains essentially an indication of which account the connect server is relaying information for.
     * It does **_not_** contain permission or the ability to read the contents of any vaults.
-* The deployed service can be deployed locally on machines which need to use it so that that no traffic to it's API
+* The deployed service can be deployed locally on machines which need to use it so that that no cross-internet traffic to your 1Password Connect API.
+  * This is ultra-paranoia mode. It's entirely fine to allow API requests to traverse the internet with proper SSL/TLS support configured.
+  * This demonstration uses an endpoint available on the wider internet at https://nothingbut.flowers.
 * It can also easily be deployed using the provided `1pw_cloudformation.yaml` file to run as a ECS cluster with compute power delivered as-used via Fargate.
   * For our use case, this would be absurdly cheap to run.
 * Have a single secret stored in the GitHub repo's Action Secrets: `OP_CONNECT_TOKEN`
-* Create a python `venv`
+  * Essentially, every application which needs to access the API will need a token to do so.
+  * These tokens are generated via the 1Password website, and they can be limited by vault and can be given an expiry date, optionally.
+* Create a python `venv`, and install the libraries listed in `requirements.txt` so that you can run `compute_answer.py`.
 
 ## Repository contents
 1) `1pw_cloudformation.yaml`: Infra as code, taken from the 1PW docs
