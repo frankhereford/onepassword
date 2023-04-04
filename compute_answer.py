@@ -39,8 +39,6 @@ REQUIRED_SECRETS = {
 # * In this case, it's an ECS cluster.
 client: Client = new_client(ONEPASSWORD_CONNECT_HOST, ONEPASSWORD_CONNECT_TOKEN)
 SECRETS = onepasswordconnectsdk.load_dict(client, REQUIRED_SECRETS)
-print(SECRETS)
-
 
 # write a function named main which requests the user to enter a string with the prompt "Enter the input string"
 def main():
