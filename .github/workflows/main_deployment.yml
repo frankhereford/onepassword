@@ -18,6 +18,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          token: ${{ env.SECRET_GITHUB_PAT }}
 
       - name: Get input
         run : |
@@ -46,9 +48,14 @@ jobs:
       - name: Git Pull
         run: >
           git pull
+      
+      - name: Git Push
+        run: >
+          git push
 
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          branch: ${{ github.ref }}
-          github_token: ${{ env.SECRET_GITHUB_PAT}}
+
+      # - name: Push changes
+        # uses: ad-m/github-push-action@v0.6.0
+        # with:
+          # branch: ${{ github.ref }}
+          # github_token: ${{ env.SECRET_GITHUB_PAT}}
