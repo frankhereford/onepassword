@@ -1,6 +1,6 @@
 # An exploration in to the 1Password Dev Tools
 
-## Discovery Day Sprint 2023
+## Discovery Day Spring 2023
 
 ### Intent
 This repository contains proof-of-concept work intended to show that 1Password can be used as a centralized secret store and integrated into other systems, such that it can be only and authoritative store of secrets.
