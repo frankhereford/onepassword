@@ -41,7 +41,7 @@ This comes with a number of benefits including:
   * These tokens are generated via the 1Password website, and they can be limited by vault and can be given an expiry date, optionally.
   * There can be as many tokens generated as needed.
     * A token can be thought of as the same as a user-like-entity in 1Password. Just like if Jane Doe, a member of the DTS team, is given an account with access to certain vaults, then a One Password Connect API server will use the provided token to access vaults to which that token has permission to read and write.
-  * These tokens are **very secret** secrets. Depending on what vault they can read, they very well can be considered keys to the kingdom.
+  * These tokens are **very secret** secrets. Depending on what vault they can read and the accessability of a One Password Connect API, they very well can be considered keys to the kingdom.
 * Create a python `venv`, and install the libraries listed in `requirements.txt` so that you can run `compute_answer.py`.
 
 ## Repository contents
