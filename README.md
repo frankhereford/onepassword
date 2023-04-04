@@ -34,7 +34,7 @@ This comes with a number of benefits including:
     * Realistically, one must understand that all of our secrets traverse the internet daily as we use the 1Password app.
   * This demonstration uses an endpoint available on the wider internet at https://nothingbut.flowers with an AWS ACM supplied certificate, which will auto-renew.
   * Multiple API endpoints can be deployed if needed.
-* Using AWS, the API service can be deployed using the provided `1pw_cloudformation.yaml` file to run as a ECS cluster with compute power delivered as-used via Fargate.
+* Using AWS, the API service can be deployed using the provided `1pw_cloudformation.yaml` file to run as a ECS cluster with compute power delivered via Fargate. We'd only pay for what we use, meaning no dedicated EC2 instance required.
   * For our use case, this would be absurdly cheap to run.
 * Because this repo contains a demonstration of GitHub integrations using 1Password as a secret store, there must be single secret stored in the GitHub repo's Action Secrets: `OP_CONNECT_TOKEN`
   * Essentially, every application which needs to access our secrets API will need a token to do so.
