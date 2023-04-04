@@ -12,28 +12,34 @@ This comes with a number of benefits including:
 * Need to have a reminder when to rotate? 
   * 1Password would love to remind you.
 * Need to avoid having to keep track of the shapes of JSON blobs with secrets in them? 
-  * Just make a 1Password entry of whatever complexity. The 1Password entry is the shape.
+  * Just make a 1Password entry of whatever complexity.
+    * The 1Password entry is the shape, if you will.
+    * When requesting multiple passwords, you can define your secret request as a JSON or JSON-like object, and the results will be provided in a shape specified by the JSON request definition.
+      * See [here](https://github.com/frankhereford/onepassword/blob/main/compute_answer.py#L29-L36) for an minimal example.
 
-## Prerequisites
+## Prerequisites and Setup Considerations
 
-* You must have deploy a `One Password Connect` service.
-  * For this demo, the API is found at https://nothingbut.flowers.
+* You must have deployment of a `One Password Connect` service.
+  * For this demo, the deployment provides an API found at https://nothingbut.flowers.
     * A `404` is the correct response if you hit the URL without the correct headers or a meaningful request.
   * This service comes in the form of a pair of docker images.
     * One is a relay service, which is responsible for talking to the 1Password service out over the internet
     * The other is an API service, used by your own apps to query the contents of vaults in your 1Password account.
-  * The two containers must be supplied with a configuration string which is a base64 encoded string of a JSON blob. The JSON is generated via the `op` command, and which does not contain secrets per se. 
-  * There is no need to share it, and we shouldn't, but, it wouldn't be bad if we did.
+  * The two containers must be supplied with a configuration value which is a base64 encoded string of a JSON blob. The JSON is generated via the `op` command, and does not contain secrets per se. 
+  * There is no need to share it, and we shouldn't, but, it wouldn't be bad if we did. It just is useful to no-one except ourselves.
     * It contains essentially an indication of which account the connect server is relaying information for.
     * It does **_not_** contain permission or the ability to read the contents of any vaults.
-* The deployed service can be deployed locally on machines which need to use it so that that no cross-internet traffic to your 1Password Connect API.
+* The API service can be deployed locally on machines which need to use it so that that no cross-internet traffic to your 1Password Connect API.
   * This is ultra-paranoia mode. It's entirely fine to allow API requests to traverse the internet with proper SSL/TLS support configured.
-  * This demonstration uses an endpoint available on the wider internet at https://nothingbut.flowers.
-* It can also easily be deployed using the provided `1pw_cloudformation.yaml` file to run as a ECS cluster with compute power delivered as-used via Fargate.
+  * This demonstration uses an endpoint available on the wider internet at https://nothingbut.flowers with an AWS ACM supplied certificate, which will auto-renew.
+  * Multiple API endpoints can be deployed if needed.
+* Using AWS, the API service can be deployed using the provided `1pw_cloudformation.yaml` file to run as a ECS cluster with compute power delivered as-used via Fargate.
   * For our use case, this would be absurdly cheap to run.
-* Have a single secret stored in the GitHub repo's Action Secrets: `OP_CONNECT_TOKEN`
+* Because this repo contains a demonstration of GitHub integrations using 1Password as a secret store, there must be single secret stored in the GitHub repo's Action Secrets: `OP_CONNECT_TOKEN`
   * Essentially, every application which needs to access the API will need a token to do so.
   * These tokens are generated via the 1Password website, and they can be limited by vault and can be given an expiry date, optionally.
+  * There can be as many tokens generated as needed.
+    * A token can be thought of as the same as a user-like-entity in 1Password. Just like Jane Doe, a member of the DTS team, is given an account with access to certain vaults, a One Password Connect API server is given a token with access to certain vaults.
 * Create a python `venv`, and install the libraries listed in `requirements.txt` so that you can run `compute_answer.py`.
 
 ## Repository contents
