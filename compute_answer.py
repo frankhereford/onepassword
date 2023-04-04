@@ -22,9 +22,9 @@ if not ONEPASSWORD_CONNECT_TOKEN:
     ONEPASSWORD_CONNECT_TOKEN = input("Enter your OnePassword Connect API token: ")
 
 # * None of the following values are secrets
-ONEPASSWORD_CONNECT_HOST = 'https://nothingbut.flowers'
+ONEPASSWORD_CONNECT_HOST = "https://nothingbut.flowers"
 ITEM_NAME = "Secret for SHA"
-VAULT_ID = "quvhrzaatbj2wotsjrumx3f62a" # Discovery day
+VAULT_ID = "quvhrzaatbj2wotsjrumx3f62a"  # Discovery day
 
 # * This is how you define the secrets you want to pull out of 1Password
 REQUIRED_SECRETS = {
@@ -42,14 +42,21 @@ SECRETS = onepasswordconnectsdk.load_dict(client, REQUIRED_SECRETS)
 
 # write a function named main which requests the user to enter a string with the prompt "Enter the input string"
 def main():
-    print("We're going to take a string you input and concatenate it with a secret from 1Password and run the result through SHA1.")
+    print(
+        "We're going to take a string you input and concatenate it with a secret from 1Password and run the result through SHA1."
+    )
     user_supplied_string = input("Enter the input string: ")
-    print("Resulting SHA1 Hash: ", shasum(user_supplied_string, SECRETS["sha_input_secret"]))
+    print(
+        "Resulting SHA1 Hash: ",
+        shasum(user_supplied_string, SECRETS["sha_input_secret"]),
+    )
+
 
 # write a function that takes two strings and concatenates them with a hyphen in the middle and computes the shasum
 def shasum(s1, s2):
     input = s1 + "-" + s2 + "\n"
     return hashlib.sha1(input.encode("ascii")).hexdigest()
+
 
 # write the boilerplate code that calls a function named main if this is the main thread
 if __name__ == "__main__":
