@@ -17,7 +17,7 @@ This comes with a number of benefits including:
     * When requesting multiple passwords, you can define your secret request as a JSON or JSON-like object, and the results will be provided in a shape specified by the JSON request definition.
       * See [here](https://github.com/frankhereford/onepassword/blob/main/compute_answer.py#L29-L36) for an minimal example.
 
-## Prerequisites and Setup Considerations
+## Prerequisites, Setup, and Considerations
 
 * You must have deployment of a `One Password Connect` service.
   * For this demo, the deployment provides an API found at https://nothingbut.flowers.
@@ -37,10 +37,10 @@ This comes with a number of benefits including:
 * Using AWS, the API service can be deployed using the provided `1pw_cloudformation.yaml` file to run as a ECS cluster with compute power delivered as-used via Fargate.
   * For our use case, this would be absurdly cheap to run.
 * Because this repo contains a demonstration of GitHub integrations using 1Password as a secret store, there must be single secret stored in the GitHub repo's Action Secrets: `OP_CONNECT_TOKEN`
-  * Essentially, every application which needs to access the API will need a token to do so.
+  * Essentially, every application which needs to access our secrets API will need a token to do so.
   * These tokens are generated via the 1Password website, and they can be limited by vault and can be given an expiry date, optionally.
   * There can be as many tokens generated as needed.
-    * A token can be thought of as the same as a user-like-entity in 1Password. Just like Jane Doe, a member of the DTS team, is given an account with access to certain vaults, a One Password Connect API server is given a token with access to certain vaults.
+    * A token can be thought of as the same as a user-like-entity in 1Password. Just like if Jane Doe, a member of the DTS team, is given an account with access to certain vaults, then a One Password Connect API server is given a token with access to certain vaults in the same way.
 * Create a python `venv`, and install the libraries listed in `requirements.txt` so that you can run `compute_answer.py`.
 
 ## Repository contents
