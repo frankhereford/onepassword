@@ -25,12 +25,13 @@ This comes with a number of benefits including:
   * This service comes in the form of a pair of docker images.
     * One is a relay service, which is responsible for talking to the 1Password service out over the internet
     * The other is an API service, used by your own apps to query the contents of vaults in your 1Password account.
-  * The two containers must be supplied with a configuration value which is a base64 encoded string of a JSON blob. The JSON is generated via the `op` command, and does not contain secrets per se. 
-  * There is no need to share it, and we shouldn't, but, it wouldn't be bad if we did. It just is useful to no-one except ourselves.
+  * The two containers must be supplied with a configuration value which is a base64 encoded string of a JSON blob. The JSON is generated via the `op` command and does not contain secrets *per se*. 
+  * There is no need to share it, and we shouldn't. That said, it wouldn't be bad if we did. It just is useful to no one except ourselves.
     * It contains essentially an indication of which account the connect server is relaying information for.
     * It does **_not_** contain permission or the ability to read the contents of any vaults.
-* The API service can be deployed locally on machines which need to use it so that that no cross-internet traffic to your 1Password Connect API.
+* The API service can be deployed locally on machines which need to access secrets so that that no cross-internet traffic to your 1Password Connect API.
   * This is ultra-paranoia mode. It's entirely fine to allow API requests to traverse the internet with proper SSL/TLS support configured.
+    * Realistically, one must understand that all of our secrets traverse the internet daily as we use the 1Password app.
   * This demonstration uses an endpoint available on the wider internet at https://nothingbut.flowers with an AWS ACM supplied certificate, which will auto-renew.
   * Multiple API endpoints can be deployed if needed.
 * Using AWS, the API service can be deployed using the provided `1pw_cloudformation.yaml` file to run as a ECS cluster with compute power delivered as-used via Fargate.
